@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" role="img" aria-label="Plugin market recommender">
+  <g fill="none" stroke="#3d6b8f" stroke-width="2.4" stroke-linecap="round">
+    <circle cx="15.3" cy="15.3" r="8.6" />
+    <path d="M21.9 21.9 L28.6 28.6" stroke-width="3.1" />
+  </g>
+  <g fill="#5b8fb9">
+    <rect x="10.9" y="14.4" width="8.8" height="2.3" rx="1.15" />
+    <rect x="10.9" y="18" width="8.8" height="2.3" rx="1.15" />
+  </g>
+  <rect x="10.9" y="10.8" width="8.8" height="2.3" rx="1.15" fill="#c98a3f" />
+</svg>
