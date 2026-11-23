@@ -179,6 +179,47 @@ function buildDefinition(config, ctx) {
   }
 }
 
+/**
+ * Mount the panel routes on the browser HTTP carrier.
+ *
+ * `ctx.inject` is the ordering-safe way to reach an optional service: the callback
+ * runs when `webServer` is mounted, not when this plugin happens to be applied.
+ * A cold start and a live bundle reload mount services in a different order, so a
+ * one-shot `ctx.get('webServer')` at apply time can silently return nothing — which
+ * is exactly how the panel lost its routes and answered 405 through the SPA fallback.
+ */
+function registerWebRoutes(ctx, config) {
+  const mount = (scope) => {
+    const webServer = scope.webServer
+    if (!webServer || typeof webServer.register !== 'function') {
+      ctx.logger?.warn?.('[dsh-market-recommender] no webServer in this profile; the panel cannot call the host half')
+      return
+    }
+    try {
+      scope.effect(() => registerRoutes(webServer, config, ctx))
+    } catch (error) {
+      ctx.logger?.warn?.(`[dsh-market-recommender] route registration failed: ${error?.message ?? error}`)
+    }
+  }
+
+  if (typeof ctx.inject === 'function') {
+    ctx.inject(['webServer'], mount)
+    return
+  }
+
+  let webServer
+  try {
+    webServer = ctx.get?.('webServer') ?? ctx.webServer
+  } catch {
+    webServer = undefined
+  }
+  if (!webServer) {
+    ctx.logger?.warn?.('[dsh-market-recommender] no webServer in this profile; the panel cannot call the host half')
+    return
+  }
+  mount({ webServer, effect: (callback) => ctx.effect(callback) })
+}
+
 export function apply(ctx, rawConfig) {
   const config = {
     ...DEFAULTS,
@@ -186,7 +227,5 @@ export function apply(ctx, rawConfig) {
     synonymGroups: synonymGroups((rawConfig ?? {}).synonyms),
   }
   ctx.tools.register(buildDefinition(config, ctx))
-
-  const disposeRoutes = registerRoutes(ctx, config)
-  if (disposeRoutes) ctx.effect(() => disposeRoutes)
+  registerWebRoutes(ctx, config)
 }

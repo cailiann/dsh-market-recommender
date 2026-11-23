@@ -1,6 +1,6 @@
 {
   "name": "dsh-market-recommender",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Recommends an existing market plugin before a new one is written: a Recommend tab in the Plugins page plus a recommend_plugin tool, searching the profile's configured plugin indexes, the community dshmarket catalog, and the optional plugins that ship with this DSH installation.",
   "type": "module",
   "license": "MIT",
