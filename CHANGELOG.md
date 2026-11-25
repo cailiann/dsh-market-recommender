@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.2
+
+- Security: all three host routes now ask the host's request gate
+  (`ctx.get('connection').requestRejection`) before doing any work, so on DSH 0.2.3 and
+  later — where the same fence guards the core `/api` — a page open in the browser can no
+  longer drive them. The same-origin check stays as the fallback for 0.2.2 and older,
+  which have no gate service at all.
+- Shorter plugin description (English and Chinese).
+
 ## 1.1.1
 
 - Fix: the panel's three host routes are now mounted through `ctx.inject(['webServer'], …)`

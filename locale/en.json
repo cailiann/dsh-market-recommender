@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Plugin market recommender",
-    "description": "Adds a Recommend tab to the Plugins page: type one sentence about what you want, and it ranks matching plugins from this profile's configured plugin indexes, the community dshmarket catalog, and the optional plugins built into this installation, each card carrying its install source, current status, and an install or enable button. It also adds a recommend_plugin tool so an agent checks the market before writing a new plugin. Catalogs are read and cached over the network; installing and enabling happen only when you press the button."
+    "description": "Adds a Recommend tab to the Plugins page: describe what you need in one sentence and it ranks the closest plugins from this profile's configured indexes, the community dshmarket catalog, and the optional plugins built into this installation, with install and enable right on the card. Also exposes recommend_plugin so an agent checks the market before writing a new plugin."
   }
 }
